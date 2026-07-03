@@ -1,113 +1,146 @@
-# 💳 UPI Transaction Analytics Dashboard
+<div align="center">
 
-A data analytics project that explores and visualizes **UPI transaction behavior in India** using **SQL, Excel, and Power BI**.  
-The goal is to analyze transaction trends, merchant performance, geographic distribution, and detect possible fraud patterns from a dataset of **250,000+ transactions**.
+# 💳 UPI Transaction Analytics 
+
+### Turning 250,000+ raw UPI transactions into fraud, revenue & growth insights
+
+**Excel** → **SQL (MySQL)** → **Power BI**
+
+![SQL](https://img.shields.io/badge/SQL-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Excel](https://img.shields.io/badge/Excel-Data%20Cleaning-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![Status](https://img.shields.io/badge/Status-Completed-success?style=for-the-badge)
+
+</div>
 
 ---
 
-## 📊 Project Overview
+## 📖 The Story
 
-UPI (Unified Payments Interface) has transformed digital payments in India.  
-This project simulates a real-world fintech analytics system by analyzing transaction-level data to answer key business questions:
+Every second, UPI processes thousands of payments across India — and every one of those transactions leaves a trail: *when it happened, where it happened, how much it was for, and whether it succeeded.*
 
-- When are transactions most active?
-- Which states dominate UPI usage?
-- Which merchants perform best?
-- Where do failures or anomalies occur?
-- What patterns may indicate fraud?
+This project puts on the hat of a fintech analyst and asks a simple question: **"What is this data actually telling us?"**
+
+Starting from a raw 250,000+ row CSV, I cleaned it in Excel, modeled and analyzed it in SQL, and told its story through an interactive Power BI dashboard — the same end-to-end pipeline a real analytics team would use to catch fraud, track growth, and report to stakeholders.
 
 ---
 
 ## 🧰 Tech Stack
 
-- **SQL** → Data cleaning, transformation, aggregation  
-- **Excel** → Data exploration & validation  
-- **Power BI** → Dashboard creation & visualization  
+| Layer | Tool | Purpose |
+|---|---|---|
+| 🧹 Data Cleaning | **Excel** | Deduplication, validation rules, pivot-table sanity checks |
+| 🗃️ Data Modeling & Analysis | **MySQL (SQL)** | Staging tables, joins, CTEs, window functions, date functions |
+| 📊 Visualization | **Power BI** | DAX measures, KPI cards, drill-through reports |
 
 ---
 
 ## 📁 Dataset
 
-- 📦 Size: 250,000+ UPI transactions  
-- 📊 Fields: transaction time, amount, status, bank, merchant category, state, etc.  
-- 🔄 Structured fintech-style dataset for analytics practice  
+- 📦 **Size:** 250,000+ synthetic UPI transactions (Jan–Dec 2024)
+- 📊 **Fields:** transaction ID, timestamp, amount, status, sender/receiver bank, merchant category, state, device, network, fraud flag
+- 🔗 **Source:** Kaggle — `skullagos5246/upi-transactions-2024-dataset`
 
 ---
 
-## 🔍 Key Analysis
+## 🔍 What I Analyzed
 
-### 📈 Transaction Analysis
-- Peak transaction hours identification  
-- Daily usage trends  
-- Average transaction value  
+### 📈 Transaction Trends
+- Month-over-month growth using **CTEs + `LAG()` window function**
+- Peak transaction hours & weekday vs. weekend behavior
 
 ### 🏦 Geographic Analysis
-- State-wise transaction distribution  
-- High adoption vs low adoption regions  
+- State-wise and region-wise transaction volume via **JOINs**
+- High vs. low UPI adoption states
 
-### 🛍️ Merchant Analysis
-- Top merchant categories  
-- Transaction volume by category  
+### 🛍️ Merchant Performance
+- Top-performing merchant categories ranked with **`RANK()` window function**
+- Share of total spend per category
 
 ### ❌ Failure Analysis
-- Failure rate by bank  
-- Category-wise failure patterns  
+- Success vs. failure rate as a core KPI
+- Failure patterns across banks and categories
 
-### 🚨 Fraud Pattern Indicators (Rule-based)
-- High-frequency transactions in short time  
-- Repeated failures from same user/bank  
-- Unusual transaction amount spikes  
+### 🚨 Fraud Pattern Detection (Rule-Based)
+- Fraud rate by state, device type, and network type
+- Statistical outlier detection using **mean + 3×standard deviation** thresholds
 
 ---
 
 ## 📊 Dashboard Features
 
-- KPI Cards (Total transactions, success rate, avg value)
-- Time-based analysis (hour/day trends)
-- State-wise heatmap
-- Merchant category breakdown
-- Failure rate visualization
-- Fraud pattern indicators
+✅ KPI Cards — Total Transactions, Total Amount, Success Rate %, Fraud Rate %
+✅ Time-intelligence line chart with MoM Growth % (using `DATEADD`)
+✅ State-wise filled map with region breakdown
+✅ Merchant category performance chart
+✅ Fraud rate matrix (device × network)
+✅ **Drill-through page** — click any state to see its full transaction detail
+✅ Fully interactive slicers (category, transaction type, month, region)
 
 ---
 
 ## 💡 Key Insights
 
-- Peak transaction time: **Evening (7–10 PM)**
-- Few merchant categories dominate most transactions
-- Certain states show higher UPI adoption
-- Specific banks show higher failure rates
-- Rule-based anomaly detection highlights suspicious patterns
+- 🕖 Peak transaction activity occurs in the **evening window (7–10 PM)**
+- 📊 A small handful of merchant categories account for the **majority of total spend**
+- 🗺️ UPI adoption is **heavily skewed** toward a few leading states
+- 🏦 Certain **bank–network combinations show disproportionately higher failure and fraud rates**
+- 🚩 Rule-based outlier detection flagged high-value transactions worth deeper investigation
 
 ---
 
-## 📌 Business Impact
+## 🧗 Challenges & How I Solved Them
 
-This project helps demonstrate:
+> **The dataset (250,000+ rows) was too large to load smoothly through MySQL Workbench's import wizard** — imports kept timing out and freezing the UI.
+>
+> **Fix:** I connected my MySQL server directly through a **different SQL editor inside VS Code** and ran the load + all analytical queries from there instead. This gave me faster query execution, better error visibility, and a more stable workflow for handling large-scale data — a good reminder that being tool-agnostic matters more than being tool-loyal.
 
-- Real-world fintech analytics understanding  
-- Business KPI tracking and reporting  
-- SQL-based data transformation skills  
-- Power BI dashboard storytelling  
+---
+
+## 🧠 Business Impact
+
+This project reflects the kind of work a UPI/fintech analytics team does daily:
+
+- 📌 **KPI tracking & reporting** for leadership dashboards
+- 📌 **Fraud monitoring** to flag suspicious transaction patterns early
+- 📌 **Growth tracking** via month-over-month revenue and volume trends
+- 📌 **Operational health monitoring** through failure-rate analysis by bank/channel
+
+---
+
+## 🗂️ Project Structure
+
+```
+📦 upi-transaction-analytics
+ ┣ 📜 upi_clean.csv              # Cleaned dataset (Excel output)
+ ┣ 📜 sql_analysis.sql           # All SQL queries (staging → analysis → view)
+ ┣ 📊 UPI_Dashboard.pbix         # Power BI dashboard
+ ┣ 🖼️ screenshots/               # Dashboard preview images
+ ┗ 📄 README.md
+```
 
 ---
 
 ## 🚀 Future Improvements
 
-- Machine learning-based fraud detection model  
-- Real-time streaming dashboard  
-- Predictive transaction forecasting  
-- API-based live data integration  
+- 🤖 Machine learning-based fraud detection model
+- ⏱️ Real-time streaming dashboard
+- 🔮 Predictive transaction forecasting
+- 🔌 Live API-based data integration
 
 ---
 
 ## 👩‍💻 Author
 
-**Suhani Chauhan**  
-Aspiring Data Analyst | SQL | Power BI | Excel  
+**Suhani Chauhan**
+*Aspiring Data Analyst | SQL • Power BI • Excel*
 
 ---
 
-## ⭐ Note
+<div align="center">
 
-This project is designed for portfolio demonstration and data analytics practice using structured fintech datasets.
+⭐ **If this project helped you or you found it interesting, consider giving it a star!**
+
+*Built as a portfolio project to demonstrate real-world fintech analytics skills — from raw data to business-ready insight.*
+
+</div>
