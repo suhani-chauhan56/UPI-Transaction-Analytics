@@ -1,0 +1,118 @@
+# UPI Transaction Analytics Project
+
+This project contains a modular database schema design and analytical SQL suite for auditing UPI transaction data, identifying seasonal patterns, auditing fraud rates, profiling merchant performance, and preparing data dashboards.
+
+## 📂 Project Structure
+
+The project is divided into logical, easy-to-understand files:
+
+```
+c:\Users\HP\Desktop\New folder (2)\
+├── schema\
+│   ├── 01_create_database.sql       - Database creation & raw staging table schema.
+│   ├── 02_import_instructions.sql    - Guides & SQL command for importing the CSV file.
+│   ├── 03_create_transactions.sql   - Final structured transactions table & casting.
+│   ├── 04_data_quality_checks.sql   - Duplicate checks, null assessments, & delete cleaning.
+│   └── 05_create_lookup_table.sql   - Storing regional lookup references.
+├── analysis\
+│   ├── 01_monthly_growth.sql        - MoM performance using CTEs & window functions.
+│   ├── 02_state_region_volume.sql   - Volume & regional rollup spend aggregations.
+│   ├── 03_peak_hours.sql            - Traffic density comparison (weekday vs weekend).
+│   ├── 04_merchant_category.sql     - Category spending rank & revenue percentage.
+│   ├── 05_fraud_patterns.sql        - Fraud flags by state, hardware, and outliers.
+│   ├── 06_ops_metrics.sql           - Failure vs success rate operational KPIs.
+│   └── 07_power_bi_export.sql       - consolidated database view for exporting data.
+├── run_all.sql                      - Sequential copy-paste script for quick execution.
+└── README.md                        - This document.
+```
+
+---
+
+## 🛠️ Step-by-Step Setup Guide
+
+### Step 1: Initialize Database & Staging
+Open MySQL Workbench, create a new query tab, and run [schema/01_create_database.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/schema/01_create_database.sql). This establishes the `upi_analytics` database and the `upi_raw` table (which imports all columns as text to avoid casting errors).
+
+### Step 2: Import the CSV Data
+You can choose one of the two options detailed in [schema/02_import_instructions.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/schema/02_import_instructions.sql):
+
+* **Option A: High-Speed Import (`LOAD DATA`)**
+  Ensure MySQL allows local infile loading. Run:
+  ```sql
+  SET GLOBAL local_infile = 1;
+  ```
+  *(Note: In Workbench, you may need to add `OPT_LOCAL_INFILE=1` under Connection -> Advanced -> Others)*.
+  Run the command below (updating the absolute path to your file):
+  ```sql
+  LOAD DATA LOCAL INFILE 'c:/Users/HP/Desktop/New folder (2)/upi_clean.csv'
+  INTO TABLE upi_raw
+  FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+  LINES TERMINATED BY '\n'
+  IGNORE 1 LINES;
+  ```
+
+* **Option B: Table Data Import Wizard**
+  1. In the Schemas tab, right-click the `upi_raw` table name and select **Table Data Import Wizard**.
+  2. Select the path to `upi_clean.csv` and proceed.
+  3. Ensure it maps to the **existing** `upi_raw` table.
+  4. Map the following CSV header columns to the raw table fields:
+     * `transaction id` ➡️ `transaction_id`
+     * `timestamp` ➡️ `ts`
+     * `transaction type` ➡️ `transaction_type`
+     * *(Other columns will auto-map based on name matching)*
+  5. Complete the wizard.
+
+Verify the import:
+```sql
+SELECT COUNT(*) FROM upi_raw; -- Should return 250,000
+```
+
+### Step 3: Cast and Parse Data
+Run [schema/03_create_transactions.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/schema/03_create_transactions.sql).
+> [!IMPORTANT]
+> **Date Parsing Note:** The raw timestamp in `upi_clean.csv` is stored in the `DD-MM-YYYY HH:mm` format (e.g. `08-10-2024 15:17`). Running the default `%Y-%m-%d %H:%i:%s` parsing returns `NULL`. We use the correct string-to-date converter:
+> `STR_TO_DATE(ts, '%d-%m-%Y %H:%i')`
+
+### Step 4: Quality Checks & Region Lookup
+1. Run [schema/04_data_quality_checks.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/schema/04_data_quality_checks.sql) to isolate records with invalid transaction amounts, verify primary key uniqueness, and delete records where critical variables are missing.
+2. Run [schema/05_create_lookup_table.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/schema/05_create_lookup_table.sql) to seed the `state_region` lookup table.
+
+---
+
+## 📈 Running the Analyses
+
+Each analytics topic resides in its own script under the `/analysis` folder:
+
+1. **MoM Volume Growth:** [01_monthly_growth.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/analysis/01_monthly_growth.sql)  
+   Uses standard CTEs and the window function `LAG()` to calculate the month-over-month growth of transaction spends.
+2. **State & Region Performance:** [02_state_region_volume.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/analysis/02_state_region_volume.sql)  
+   Joins geographical dimension keys to show aggregate spend count, sum, and average spend sizes.
+3. **Hourly Peaks:** [03_peak_hours.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/analysis/03_peak_hours.sql)  
+   Aggregates transaction volumes across 24-hour periods and splits them into weekday vs weekend groups.
+4. **Merchant Spend Dominance:** [04_merchant_category.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/analysis/04_merchant_category.sql)  
+   Ranks merchants via windowed SUM totals to demonstrate which product categories capture the largest market share.
+5. **Fraud and Outlier Audits:** [05_fraud_patterns.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/analysis/05_fraud_patterns.sql)  
+   Calculates fraud percentages by geography or device-network pairs. The statistical outlier check filters transactions exceeding:
+   $$\mu + 3\sigma$$
+   (Mean + 3 Standard Deviations)
+6. **Platform Performance KPIs:** [06_ops_metrics.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/analysis/06_ops_metrics.sql)  
+   Calculates system-wide success and failure rates.
+
+---
+
+## 📊 Integrating with Power BI
+
+We prepare the analytics view in [analysis/07_power_bi_export.sql](file:///c:/Users/HP/Desktop/New%20folder%20(2)/analysis/07_power_bi_export.sql):
+
+### Option A: Flat File Import (Staging CSV)
+1. In MySQL Workbench, execute:
+   ```sql
+   SELECT * FROM v_transactions;
+   ```
+2. Click **Export** in the results grid toolbar and save it as a CSV UTF-8 file (e.g. `upi_final_analytics.csv`).
+3. Open Power BI Desktop, click **Get Data** ➡️ **Text/CSV**, choose the file, and load.
+
+### Option B: Live Database Connection
+1. Open Power BI Desktop, select **Get Data** ➡️ **MySQL database**.
+2. Input server host (`localhost`) and database name (`upi_analytics`).
+3. Under the server navigator, select the View `v_transactions` and click **Load**.
