@@ -1,287 +1,113 @@
 # 💳 UPI Transaction Analytics Dashboard
 
-<p align="center">
-
-![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=for-the-badge&logo=powerbi)
-![MySQL](https://img.shields.io/badge/MySQL-Analytics-4479A1?style=for-the-badge&logo=mysql)
-![Excel](https://img.shields.io/badge/Excel-Data%20Cleaning-217346?style=for-the-badge&logo=microsoftexcel)
-![SQL](https://img.shields.io/badge/SQL-Advanced%20Queries-blue?style=for-the-badge)
-![Data Analysis](https://img.shields.io/badge/Data%20Analytics-End%20to%20End-success?style=for-the-badge)
-
-</p>
+A data analytics project that explores and visualizes **UPI transaction behavior in India** using **SQL, Excel, and Power BI**.  
+The goal is to analyze transaction trends, merchant performance, geographic distribution, and detect possible fraud patterns from a dataset of **250,000+ transactions**.
 
 ---
 
-# 📖 Project Story
+## 📊 Project Overview
 
-India processes billions of UPI transactions every month, generating massive amounts of financial data. Businesses and banks need actionable insights from this data to understand customer behavior, monitor transaction performance, identify fraud, and make informed business decisions.
+UPI (Unified Payments Interface) has transformed digital payments in India.  
+This project simulates a real-world fintech analytics system by analyzing transaction-level data to answer key business questions:
 
-In this project, I worked as a **Data Analyst**, transforming a large raw dataset of **250,000+ UPI transactions** into meaningful business insights.
-
-Starting from messy raw data, I cleaned, validated, analyzed, and visualized the complete dataset using **Excel, MySQL, and Power BI**, creating an interactive dashboard that helps stakeholders monitor transaction trends and customer behavior.
-
----
-
-# 🚀 Project Objectives
-
-✅ Clean and validate raw transaction data
-
-✅ Perform SQL-based business analysis
-
-✅ Detect fraud patterns
-
-✅ Identify customer transaction behaviour
-
-✅ Build an interactive Power BI dashboard
-
-✅ Convert raw financial data into business insights
+- When are transactions most active?
+- Which states dominate UPI usage?
+- Which merchants perform best?
+- Where do failures or anomalies occur?
+- What patterns may indicate fraud?
 
 ---
 
-# 🛠️ Tech Stack
+## 🧰 Tech Stack
 
-| Tool | Purpose |
-|------|----------|
-| 📊 Excel | Data Cleaning & Validation |
-| 🗄️ MySQL | Data Storage & SQL Analysis |
-| 📈 Power BI | Dashboard & Visualization |
+- **SQL** → Data cleaning, transformation, aggregation  
+- **Excel** → Data exploration & validation  
+- **Power BI** → Dashboard creation & visualization  
 
 ---
 
-# 📂 Dataset
+## 📁 Dataset
 
-- Synthetic UPI Transaction Dataset (2024)
-- **250,000+ Records**
-- Covers:
-  - Transaction Amount
-  - Transaction Type
-  - Merchant Category
-  - Transaction Status
-  - States
-  - Banks
-  - Device Types
-  - Network Types
-  - Fraud Flags
-  - Date & Time
+- 📦 Size: 250,000+ UPI transactions  
+- 📊 Fields: transaction time, amount, status, bank, merchant category, state, etc.  
+- 🔄 Structured fintech-style dataset for analytics practice  
 
 ---
 
-# 🔄 Project Workflow
+## 🔍 Key Analysis
 
-```text
-Raw Dataset
-      │
-      ▼
-Excel Cleaning
-      │
-      ▼
-MySQL Database
-      │
-      ▼
-SQL Business Analysis
-      │
-      ▼
-Power BI Dashboard
-      │
-      ▼
-Business Insights
-```
+### 📈 Transaction Analysis
+- Peak transaction hours identification  
+- Daily usage trends  
+- Average transaction value  
 
----
+### 🏦 Geographic Analysis
+- State-wise transaction distribution  
+- High adoption vs low adoption regions  
 
-# 🧹 Data Cleaning
+### 🛍️ Merchant Analysis
+- Top merchant categories  
+- Transaction volume by category  
 
-Performed extensive preprocessing including:
+### ❌ Failure Analysis
+- Failure rate by bank  
+- Category-wise failure patterns  
 
-- Removed duplicate transactions
-- Fixed inconsistent text values
-- Removed blank records
-- Converted incorrect data types
-- Standardized transaction status
-- Validated timestamps
-- Cleaned amount fields
-- Created structured tables for analysis
+### 🚨 Fraud Pattern Indicators (Rule-based)
+- High-frequency transactions in short time  
+- Repeated failures from same user/bank  
+- Unusual transaction amount spikes  
 
 ---
 
-# 📊 Business Analysis Performed
+## 📊 Dashboard Features
 
-### 📈 Monthly Transaction Growth
-
-- Transaction trend analysis
-- Month-over-Month Growth
-- Revenue trend
-
----
-
-### 🌍 State-wise Analysis
-
-- Highest transaction volume
-- Total transaction value
-- Regional comparison
+- KPI Cards (Total transactions, success rate, avg value)
+- Time-based analysis (hour/day trends)
+- State-wise heatmap
+- Merchant category breakdown
+- Failure rate visualization
+- Fraud pattern indicators
 
 ---
 
-### ⏰ Peak Transaction Hours
+## 💡 Key Insights
 
-- Busiest transaction hours
-- Customer activity pattern
-- Daily transaction distribution
-
----
-
-### 🛒 Merchant Category Analysis
-
-- Highest spending category
-- Average transaction value
-- Category ranking
+- Peak transaction time: **Evening (7–10 PM)**
+- Few merchant categories dominate most transactions
+- Certain states show higher UPI adoption
+- Specific banks show higher failure rates
+- Rule-based anomaly detection highlights suspicious patterns
 
 ---
 
-### 🛡️ Fraud Detection Analysis
+## 📌 Business Impact
 
-- Fraud Rate by State
-- Fraud by Device Type
-- Fraud by Network Type
-- High-value suspicious transactions
+This project helps demonstrate:
 
----
-
-# 💡 Business Insights
-
-This dashboard helps businesses answer questions like:
-
-- 📌 Which states generate the highest transaction volume?
-- 📌 What time of day has the maximum UPI activity?
-- 📌 Which merchant categories receive the highest payments?
-- 📌 Which devices show higher fraud rates?
-- 📌 What is the overall transaction success rate?
-- 📌 Which regions contribute the most revenue?
-
-These insights can help financial institutions improve customer experience, optimize operations, and strengthen fraud monitoring.
+- Real-world fintech analytics understanding  
+- Business KPI tracking and reporting  
+- SQL-based data transformation skills  
+- Power BI dashboard storytelling  
 
 ---
 
-# 📊 Dashboard Features
+## 🚀 Future Improvements
 
-✔ KPI Cards
-
-- Total Transactions
-- Total Amount
-- Success Rate
-- Fraud Rate
-- Average Transaction Value
-
-✔ Interactive Filters
-
-- Month
-- State
-- Merchant Category
-- Transaction Type
-
-✔ Interactive Charts
-
-- Monthly Growth
-- State Analysis
-- Merchant Analysis
-- Peak Hours
-- Fraud Analysis
-
-✔ Drill Through Reports
+- Machine learning-based fraud detection model  
+- Real-time streaming dashboard  
+- Predictive transaction forecasting  
+- API-based live data integration  
 
 ---
 
-# 🧠 SQL Concepts Used
+## 👩‍💻 Author
 
-- GROUP BY
-- Aggregate Functions
-- CASE WHEN
-- CTEs
-- Window Functions
-- RANK()
-- LAG()
-- DATE Functions
-- JOINs
-- Views
-- Data Cleaning Queries
+**Suhani Chauhan**  
+Aspiring Data Analyst | SQL | Power BI | Excel  
 
 ---
 
-# ⚡ Challenges Faced
+## ⭐ Note
 
-One of the biggest challenges was working with a dataset containing **250,000+ records**.
-
-Initially, importing and processing such a large dataset in **MySQL Workbench** became slow and unstable.
-
-To overcome this issue:
-
-- Connected the MySQL Server directly with **Visual Studio Code**
-- Executed SQL queries using the VS Code SQL extension
-- Performed the complete SQL analysis through the connected server
-- Successfully handled the large dataset without performance issues
-
-This experience improved my understanding of handling large datasets and choosing better development environments when traditional tools become limiting.
-
----
-
-# 📈 Key Skills Demonstrated
-
-- Data Cleaning
-- SQL Analysis
-- Business Analytics
-- Dashboard Design
-- Data Visualization
-- KPI Development
-- Problem Solving
-- Fraud Detection
-- Data Storytelling
-
----
-
-# 📸 Dashboard Preview
-
-```
-Dashboard Screenshot
-```
-
----
-
-# 🎯 Business Impact
-
-This dashboard enables stakeholders to:
-
-- Monitor transaction performance
-- Track business growth
-- Detect fraudulent activities
-- Understand customer behaviour
-- Identify high-performing regions
-- Make data-driven business decisions
-
----
-
-# 📌 Future Improvements
-
-- Real-time dashboard using live SQL connection
-- Predictive fraud detection using Machine Learning
-- Customer segmentation
-- Banking performance analysis
-- Transaction forecasting
-- Power BI Service Deployment
-
----
-
-# 👩‍💻 About This Project
-
-This project demonstrates an **end-to-end Data Analytics workflow**, starting from raw transactional data and ending with an interactive business dashboard.
-
-It reflects practical skills expected from a **Data Analyst**, including data cleaning, SQL querying, business analysis, visualization, and communicating insights through dashboards.
-
----
-
-## ⭐ If you found this project useful, consider giving it a Star!
-
-```
-⭐ Star this repository
-🍴 Fork this repository
-📈 Follow for more Data Analytics Projects
-```
+This project is designed for portfolio demonstration and data analytics practice using structured fintech datasets.
