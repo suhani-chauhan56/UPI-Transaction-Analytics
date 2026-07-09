@@ -15,7 +15,7 @@
 
 ---
 
-## 📖 The Story
+
 
 Every second, UPI processes thousands of payments across India — and every one of those transactions leaves a trail: *when it happened, where it happened, how much it was for, and whether it succeeded.*
 
