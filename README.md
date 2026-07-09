@@ -66,7 +66,7 @@ Starting from a raw 250,000+ row CSV, I cleaned it in Excel, modeled and analyze
 
 - 📦 **Size:** 250,000+ synthetic UPI transactions (Jan–Dec 2024)
 - 📊 **Fields:** transaction ID, timestamp, amount, status, sender/receiver bank, merchant category, state, device, network, fraud flag
-- 🔗 **Source:** Kaggle — `skullagos5246/upi-transactions-2024-dataset`
+- 🔗 **Source:** Kaggle — `[skullagos5246/upi-transactions-2024-dataset](https://www.kaggle.com/datasets/skullagos5246/upi-transactions-2024-dataset)`
 
 ---
 
