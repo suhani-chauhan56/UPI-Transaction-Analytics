@@ -119,17 +119,6 @@ state_region[state] 1 ────< *  transactions[sender_state]   (if using se
 - **Count of receiver_age_group by sender_age_group and region** — Stacked horizontal bar chart, `receiver_age_group` count broken down by `sender_age_group` (18-25, 26-35, 36-45), colored/legended by `region` (East, North, South, West).
 - **Success Rate % by sender_state and region** — Filled map, color intensity by `Success Rate %`, colored/legended by `region`.
 
-> **Not yet included on this page:** a dedicated Fraud Rate % by state chart, a device_type × network_type fraud matrix, a clean monthly (YearMonth) growth line with MoM Growth %, and a drill-through detail page. These were part of the original plan (see [Suggested Next Steps](#suggested-next-steps)) but aren't visible in the current build — add them if you want the full drill-through / fraud-deep-dive experience.
-
-## Suggested Next Steps
-
-- Replace **Total Amount by txn_ts** with a **Total Amount by `DateTable[YearMonth]`** line chart (plus `MoM Growth %` on a secondary axis) for a cleaner month-over-month trend, with a Year → Month → Day drill-down hierarchy.
-- Add a **Fraud Rate % by sender_state** bar chart and a **device_type × network_type** matrix shaded by Fraud Rate %, per the original fraud-analysis plan.
-- Add a **State Detail** drill-through page (drill-through field: `sender_state`) so users can right-click a state on the map and see transaction-level detail.
-- Consider linear-scale alternatives or annotated log-scale axes on the bar/column charts — log scales are useful for the wide value spread here but can be confusing for non-technical viewers unless labeled clearly.
-
----
-
 ## Known Data Caveats
 
 - **Fraud is sparse.** In this dataset, `fraud_flag = 1` occurs in only a handful of the ~1,000 transactions (overall Fraud Rate % ≈ 0.10%). As a result, per-state and per-category fraud breakdowns will show a single dominant bar (or none at all) rather than a smooth distribution. This is an honest reflection of low fraud incidence in the sample data, not a chart/measure error — verify by placing a temporary `Fraud Count` card on the canvas before assuming a bug.
@@ -147,10 +136,6 @@ state_region[state] 1 ────< *  transactions[sender_state]   (if using se
 4. Re-check the fraud visuals if the fraud rate materially changes — the dashboard was designed around a low-fraud-incidence dataset.
 
 ---
-
-## File
-
-- `UPI_Transition_Analysis_Dashboard.pbix` — main Power BI report file (rename to match your saved filename)
 
 ## Author / Project Context
 
